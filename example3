@@ -1,84 +1,85 @@
-pipeline:
-  agent any
-  stages:
-    - build
-    - test
-    - deploy
-
-check-de-la-coque:
-  stage: build
-  script:
-    - echo "Checking de la coque"
-    - sleep 10
-    - echo "Intégrité de la coque à 100%"
-
-verification-electronique:
-  stage: test
-  script:
-    - echo "Vérification des systèmes électroniques"
-    - sleep 10
-    - echo "Intégrité du système électronique à 100%"
-
-verification-carburant:
-  stage: build
-  script:
-    - echo "Vérification du niveau de carburant"
-    - sleep 10
-    - echo "Réservoir rempli à 74%"
-
-verification-propulseur:
-  stage: build
-  environment: production
-  script:
-    - echo "Vérification de l'intégrité des propulseurs"
-    - sleep 10
-    - echo "Propulseurs intacts"
-
-verification-equipement-nav:
-  stage: test
-  script:
-    - echo "Vérification des équipements de navigation"
-    - sleep 10
-    - echo "Léger dysfonctionnement de la carte numérique"
-
-verification-equipement-sec:
-  stage: deploy
-  script:
-    - echo "Vérification de l'intégrité des équipements de secours"
-    - sleep 10
-    - echo "Équipements de secours OK"
-
-verification-communication:
-  stage: deploy
-  script:
-    - echo "Vérification des équipements de communication"
-    - sleep 10
-    - echo "Test radio OK"
-
-verification-vitesse:
-  stage: test
-  script:
-    - echo "Vérification de la vitesse"
-    - sleep 15
-    - echo "Test de vitesse OK"
-
-verification-trajectoire:
-  stage: test
-  script:
-    - echo "Vérification de la trajectoire"
-    - sleep 10
-    - echo "Trajectoire OK"
-
-verification-altitude:
-  stage: test
-  script:
-    - echo "Vérification de l'altitude"
-    - sleep 10
-    - echo "Test altitude OK"
-
-verification-train:
-  stage: deploy
-  script:
-    - echo "Vérification du déploiement du train d'atterrissage"
-    - sleep 10
-    - echo "Train sorti"
+pipeline {
+    agent any
+    stages {
+        stage('Build: Check de la coque') {
+            steps {
+                echo "Checking de la coque"
+                sleep 10
+                echo "Intégrité de la coque à 100%"
+            }
+        }
+        stage('Test: Vérification électronique') {
+            steps {
+                echo "Vérification des systèmes électroniques"
+                sleep 10
+                echo "Intégrité du système électronique à 100%"
+            }
+        }
+        stage('Build: Vérification du carburant') {
+            steps {
+                echo "Vérification du niveau de carburant"
+                sleep 10
+                echo "Réservoir rempli à 74%"
+            }
+        }
+        stage('Deploy: Vérification des propulseurs') {
+            environment {
+                ENV = 'production'
+            }
+            steps {
+                echo "Vérification de l'intégrité des propulseurs"
+                sleep 10
+                echo "Propulseurs intacts"
+            }
+        }
+        stage('Test: Vérification des équipements de navigation') {
+            steps {
+                echo "Vérification des équipements de navigation"
+                sleep 10
+                echo "Léger dysfonctionnement de la carte numérique"
+            }
+        }
+        stage('Deploy: Vérification des équipements de secours') {
+            steps {
+                echo "Vérification de l'intégrité des équipements de secours"
+                sleep 10
+                echo "Équipements de secours OK"
+            }
+        }
+        stage('Deploy: Vérification des communications') {
+            steps {
+                echo "Vérification des équipements de communication"
+                sleep 10
+                echo "Test radio OK"
+            }
+        }
+        stage('Test: Vérification de la vitesse') {
+            steps {
+                echo "Vérification de la vitesse"
+                sleep 15
+                echo "Test de vitesse OK"
+            }
+        }
+        stage('Test: Vérification de la trajectoire') {
+            steps {
+                echo "Vérification de la trajectoire"
+                sleep 10
+                echo "Trajectoire OK"
+            }
+        }
+        stage('Test: Vérification de l\'altitude') {
+            steps {
+                echo "Vérification de l'altitude"
+                sleep 10
+                echo "Test altitude OK"
+            }
+        }
+        stage('Deploy: Vérification du train d\'atterrissage') {
+            steps {
+                echo "Vérification du déploiement du train d'atterrissage"
+                sleep 10
+                echo "Train sorti"
+            }
+        }
+    }
+}
