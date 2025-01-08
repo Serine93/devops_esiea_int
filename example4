@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: 'NAME', description: 'Veuillez indiquer votre nom ?')
+        text(name: 'DESC', description: 'Décrivez les détails du job')
+        booleanParam(name: 'SKIP_TEST', description: 'Souhaitez-vous ignorer l\'exécution des cas de test ?')
+        choice(name: 'BRANCH', choices: ['Master', 'Dev'], description: 'Choisissez la branche')
+        password(name: 'SONAR_SERVER_PWD', description: 'Entrez le mot de passe SONAR')
+    }
+    stages {
+        stage('Initialisation') {
+            steps {
+                echo "Pipeline démarré par : ${params.NAME}"
+                echo "Description du job : ${params.DESC}"
+            }
+        }
+        stage('Choix de la branche') {
+            steps {
+                echo "Branche sélectionnée : ${params.BRANCH}"
+            }
+        }
+        stage('Vérification des tests') {
+            when {
+                expression { return !params.SKIP_TEST }
+            }
+            steps {
+                echo "Les tests sont exécutés."
+            }
+        }
+        stage('Ignorer les tests') {
+            when {
+                expression { return params.SKIP_TEST }
+            }
+            steps {
+                echo "Les tests sont ignorés."
+            }
+        }
+        stage('Validation du mot de passe') {
+            steps {
+                script {
+                    if (params.SONAR_SERVER_PWD) {
+                        echo "Mot de passe SONAR reçu."
+                    } else {
+                        echo "Mot de passe SONAR manquant."
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            echo "Pipeline terminé."
+        }
+    }
+}
