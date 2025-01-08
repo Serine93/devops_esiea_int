@@ -2,29 +2,29 @@ pipeline {
     agent any
     parameters {
         string(name: 'NAME', description: 'Veuillez indiquer votre nom ?')
-        text(name: 'DESC', description: 'Décrivez les détails du job')
-        booleanParam(name: 'SKIP_TEST', description: 'Souhaitez-vous ignorer l\'exécution des cas de test ?')
+        text(name: 'DESC', description: 'Decrivez les details du job')
+        booleanParam(name: 'SKIP_TEST', description: 'Souhaitez-vous ignorer l'execution des cas de test ?')
         choice(name: 'BRANCH', choices: ['Master', 'Dev'], description: 'Choisissez la branche')
         password(name: 'SONAR_SERVER_PWD', description: 'Entrez le mot de passe SONAR')
     }
     stages {
         stage('Initialisation') {
             steps {
-                echo "Pipeline démarré par : ${params.NAME}"
+                echo "Pipeline demarre par : ${params.NAME}"
                 echo "Description du job : ${params.DESC}"
             }
         }
         stage('Choix de la branche') {
             steps {
-                echo "Branche sélectionnée : ${params.BRANCH}"
+                echo "Branche selectionnee : ${params.BRANCH}"
             }
         }
-        stage('Vérification des tests') {
+        stage('Verification des tests') {
             when {
                 expression { return !params.SKIP_TEST }
             }
             steps {
-                echo "Les tests sont exécutés."
+                echo "Les tests sont executes."
             }
         }
         stage('Ignorer les tests') {
@@ -32,7 +32,7 @@ pipeline {
                 expression { return params.SKIP_TEST }
             }
             steps {
-                echo "Les tests sont ignorés."
+                echo "Les tests sont ignores."
             }
         }
         stage('Validation du mot de passe') {
@@ -49,7 +49,7 @@ pipeline {
     }
     post {
         always {
-            echo "Pipeline terminé."
+            echo "Pipeline termine."
         }
     }
 }
