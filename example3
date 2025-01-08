@@ -1,0 +1,40 @@
+pipeline:
+  agent any
+  stages:
+    - build
+    - test
+    - deploy
+
+check-de-la-coque:
+  stage: build
+  script:
+    - echo "Checking de la coque"
+    - sleep 10
+    - echo "Intégrité de la coque à 100%"
+
+verification-electronique:
+  stage: test
+  script:
+    - echo "Vérification des systèmes électroniques"
+    - sleep 10
+    - echo "Intégrité du système électronique à 100%"
+
+verification-carburant:
+  stage: test
+  script:
+    - echo "Vérification du niveau de carburant"
+    - sleep 10
+    - echo "Réservoir rempli à 74%"
+
+verification-propulseur:
+  stage: deploy
+  environment: production
+  script:
+    - echo "Vérification de l'intégrité des propulseurs."
+    - sleep 10
+    - echo "Propulseurs intacts"
+
+verification-equipements-nav:
+  stage: test
+  script:
+    - echo "Vérification des équipements de navigation"
