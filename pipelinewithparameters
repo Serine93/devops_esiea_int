@@ -5,6 +5,8 @@ pipeline {
         string(name: 'NAME', description: 'Please tell me your name')
         choice(name: 'MONTH', choices: ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'], description: 'Select Month')
         choice(name: 'DAY', choices: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'], description: 'Select Day')
+        choice(name: 'USER_STORIES', choices: ['US01', 'US02', 'US03'], description: 'Select User Stories to complete')
+        string(name: 'PROGRESS', description: 'Enter the number of days completed')
     }
     
     stages {
@@ -24,6 +26,28 @@ pipeline {
             steps {
                 script {
                     echo "BUILD - Name: ${params.NAME}, Month: ${params.MONTH}, Day: ${params.DAY}"
+                    def userStory = params.USER_STORIES
+                    def progress = params.PROGRESS.toInteger()
+                    
+                    if (userStory == 'US01') {
+                        if (progress >= 4) {
+                            echo 'Bravo pour avoir décrit ta journée une fois par semaine !'
+                        } else {
+                            echo 'Courage, tu vas y arriver !'
+                        }
+                    } else if (userStory == 'US02') {
+                        if (progress >= 12) {
+                            echo 'Bravo pour avoir décrit ta journée 3 fois par semaine !'
+                        } else {
+                            echo 'Courage, tu vas y arriver !'
+                        }
+                    } else if (userStory == 'US03') {
+                        if (progress >= 30) {
+                            echo 'Bravo pour avoir décrit toutes tes journées !'
+                        } else {
+                            echo 'Courage, tu vas y arriver !'
+                        }
+                    }
                 }
             }
         }
